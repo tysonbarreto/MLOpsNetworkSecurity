@@ -1,0 +1,1 @@
+from .NSlogger import logger

@@ -1,0 +1,2 @@
+from .config_entity import DataIngestionConfig
+from .artifact_entity import DataIngestionArtifact
