@@ -42,4 +42,5 @@ jobs:
             
             - name: Login into AWS ECR
               id: login-ecr
-              run: aws-actions/amazon-ecr-login@v2
+              run: aws-actions/amazon-ecr-login@v1
+              
