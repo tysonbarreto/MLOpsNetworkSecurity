@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:4d2aa6ab52de8f0e35deabeb5152445681f289f138258712832f17c7dce7d323"
+content_hash = "sha256:cd7dbf09c4f74172561158a56d39d36829a8379d0c9321a9f0ed0eceb55c2ec6"
 
 [[metadata.targets]]
 requires_python = "==3.11.*"
@@ -541,7 +541,7 @@ files = [
 
 [[package]]
 name = "dagshub"
-version = "0.3.40"
+version = "0.3.41"
 requires_python = ">=3.8"
 summary = "DagsHub client libraries"
 groups = ["default"]
@@ -564,8 +564,8 @@ dependencies = [
     "treelib>=1.6.4",
 ]
 files = [
-    {file = "dagshub-0.3.40-py3-none-any.whl", hash = "sha256:c67d596397063e34471bc246a09bd7ccbd210f17c11945d9a45ff75a847bc6d6"},
-    {file = "dagshub-0.3.40.tar.gz", hash = "sha256:b7107db7bc93730aedaf853b607a2b3f80954f28927b3b3d4a9bb98ffc2f89dd"},
+    {file = "dagshub-0.3.41-py3-none-any.whl", hash = "sha256:bc64b4e1ecdba0d59567aa6ea44ecd064500d7fcb9073549a45d9aee8d534926"},
+    {file = "dagshub-0.3.41.tar.gz", hash = "sha256:8f0c7b81b45759e02706416d0fc8c56059f4266e4f7fcf893aa7781da20cdb01"},
 ]
 
 [[package]]

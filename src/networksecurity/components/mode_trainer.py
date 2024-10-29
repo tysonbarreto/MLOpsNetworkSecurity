@@ -16,6 +16,8 @@ import numpy as np
 import pickle
 from typing import Any
 import mlflow
+import dagshub
+
 
 logger = logger()
 
@@ -31,6 +33,7 @@ class ModelTrainer:
         self.test_file_path = self.data_transformation_artifact.transformed_test_file_path
 
     def track_mlflow(self, best_model:Any, classification_score_metrics:ClassificationMetricArtifact):
+        dagshub.init(repo_owner='tysonbarreto', repo_name='MLOpsNetworkSecurity', mlflow=True)
         with mlflow.start_run():
             f1_score = classification_score_metrics.f1_score
             precision_score = classification_score_metrics.precision_score
@@ -102,7 +105,9 @@ class ModelTrainer:
         network_model = NetworkModel(preprocessor=preprocessor, model=best_model)
         save_object(file_path=self.model_path, obj=network_model)
 
-        save_object(os.path.join(model_dir_path,"final_model/model.pkl"),best_model)
+        save_object("final_model/model.pkl",best_model)
+        save_object("final_model/preprocessor.pkl",preprocessor)
+
 
         model_trainer_artifact=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,
                              train_metric_artifact=classification_train_metric,
