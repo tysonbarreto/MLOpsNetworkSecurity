@@ -9,7 +9,6 @@ from scipy.stats import ks_2samp
 import os, sys
 import pandas as pd
 import numpy as np
-from from_root import from_root
 
 logger = logger()
 
@@ -21,7 +20,7 @@ class DataValidation:
     #training_pipeline_: training_pipeline
 
     def __post_init__(self):
-        self.schema_config = read_yaml_file(file_path=os.path.join(from_root(),training_pipeline.SCHEMA_FILE_PATH))
+        self.schema_config = read_yaml_file(file_path=os.path.join(training_pipeline.SCHEMA_FILE_PATH))
 
     def initiate_data_validation(self)->DataValidationArtifact:
         train_file_path = self.data_ingestion_artifact.trained_file_path

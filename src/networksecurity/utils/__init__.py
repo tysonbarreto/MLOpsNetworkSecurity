@@ -25,7 +25,7 @@ def TryExceptLogger(func):
         try:
             return func(*args,**kwargs)
         except Exception as e:
-            logger().info(NSException(e,sys))
+            logger.info(NSException(e,sys))
     return _wrapper
 
 def read_yaml_file(file_path:str)->dict:
@@ -33,7 +33,7 @@ def read_yaml_file(file_path:str)->dict:
         with open(file_path) as yaml_file:
             return yaml.safe_load(yaml_file)
     except Exception as e:
-        logger().info(NSException(e,sys))
+        logger.info(NSException(e,sys))
 
 
 def read_data_csv(file_path:str)->pd.DataFrame:

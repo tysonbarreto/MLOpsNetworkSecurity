@@ -8,7 +8,6 @@ from dataclasses import dataclass
 import os, sys
 import pandas as pd
 import numpy as np
-from from_root import from_root
 from sklearn.impute import KNNImputer
 from sklearn.pipeline import Pipeline
 

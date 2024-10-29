@@ -6,8 +6,8 @@ from src.networksecurity.components.data_transformation import DataTransformatio
 from src.networksecurity.components.mode_trainer import ModelTrainer
 from src.networksecurity.entity.config_entity import ModelTrainerConfig, DataIngestionConfig, DataValidationConfig, TrainingPipelineConfig, DataTransformationConfig
 from src.networksecurity.entity.artifact_entity import ModelTrainerArtifact, DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ClassificationMetricArtifact
-from src.networksecurity.exception import NSException
-from src.networksecurity.loggings import logger
+from src.networksecurity.exception.NSException import NSException
+from src.networksecurity.loggings.NSlogger import logger
 from src.networksecurity.constants import training_pipeline
 from src.networksecurity.cloud import S3Sync
 
