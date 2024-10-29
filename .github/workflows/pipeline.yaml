@@ -5,10 +5,11 @@ on:
         branches:
             - main
         paths-ignore:
-            - "README.md"
+            - 'README.md'
 
 jobs:
     integration:
+        name: Continous Integration
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Code
