@@ -19,4 +19,4 @@ jobs:
               run: echo "Linting repository"
             
             - name: Run unit test
-              uses: echo "Running unit tests" 
+              run: echo "Running unit tests" 
