@@ -1,2 +1,2 @@
-from .config_entity import DataIngestionConfig
-from .artifact_entity import DataIngestionArtifact
+from .config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
+from .artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact

@@ -1,6 +1,8 @@
 # from src.exception import NSException
 # from src.logging import logger
-from src.networksecurity import NSException,logger,TryExceptLogger, DataIngestion, DataIngestionConfig,DataIngestionArtifact, TrainingPipelineConfig, training_pipeline
+from src.networksecurity import (NSException,logger,TryExceptLogger, DataIngestion, DataIngestionConfig,
+                                 DataIngestionArtifact, TrainingPipelineConfig, training_pipeline,
+                                 DataValidation, DataValidationConfig, DataTransformation, DataTransformationConfig, read_data_csv)
 from logging import StreamHandler, FileHandler
 import logging
 import sys
@@ -8,36 +10,24 @@ from pathlib import Path
 from datetime import datetime
 import os
 from from_root import from_root, from_here
-# load_dotenv()
 
+logger=logger()
 
-
-# MONGO_DB_UN = os.getenv('MONGO_DB_UN')
-# MONGO_DB_PWD = os.getenv('MONGO_DB_PWD')
-
-
-# def DBClient():
-#     uri = f"mongodb+srv://{MONGO_DB_UN}:{MONGO_DB_PWD}@networksecuritycluster.bp8lc.mongodb.net/?retryWrites=true&w=majority&appName=NetworkSecurityCluster"
-#     # Create a new client and connect to the server
-#     client = MongoClient(uri)
-#     # Send a ping to confirm a successful connection
-#     try:
-#         client.admin.command('ping')
-#         print("Pinged your deployment. You successfully connected to MongoDB!")
-#     except Exception as e:
-#         logger.info(NSException(e,sys))
-
-# if __name__=="__main__":
-#     __all__=["DBClient"]
-
-
-def main()->DataIngestionArtifact:
+def main():
     training_pipeline_config = TrainingPipelineConfig()
     data_ingestion_config = DataIngestionConfig(training_pipeline_config)
     data_ingestion = DataIngestion(data_ingestion_config)
     data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
-    print(data_ingestion_artifact)
-
+    logger.info("<<<<< DataIngestion successfully completed>>>>>")
+    data_validation_config = DataValidationConfig(training_pipeline_config)
+    data_validation = DataValidation(data_ingestion_artifact, data_validation_config)
+    logger.info("<<<<< Initiating DataValidation....>>>>>")
+    data_validation_artifact = data_validation.initiate_data_validation()
+    logger.info("<<<<< DataValidation successfully completed>>>>>")
+    data_transformation_config = DataTransformationConfig(training_pipeline_config)
+    data_transformation= DataTransformation(data_validation_artifact,data_transformation_config)
+    data_transformation_artifact = data_transformation.initiate_data_transformation()
+    logger.info("<<<<< DataTransformation successfully completed>>>>>")
 
 if __name__=="__main__":
     main()

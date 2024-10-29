@@ -20,6 +20,7 @@ import pandas as pd
 load_dotenv()
 
 logger = logger()
+
 @dataclass
 class DataIngestion():
     data_ingestion_config: DataIngestionConfig
@@ -45,8 +46,8 @@ class DataIngestion():
     def export_collection_as_dataframe(db_name:str, collection_name:str, mongo_client:MongoClient)->pd.DataFrame:
         collection = mongo_client[db_name][collection_name]
         df = pd.DataFrame(list(collection.find()))
-        if "id" in df.columns:
-            df.drop(columns=["id"], axis=1, inplace=True)
+        if "_id" in df.columns:
+            df.drop(columns=["_id"], axis=1, inplace=True)
         
         df.replace({"na":np.nan}, inplace=True)
         return df
