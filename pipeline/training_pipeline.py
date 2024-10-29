@@ -8,6 +8,8 @@ from src.networksecurity.entity.config_entity import ModelTrainerConfig, DataIng
 from src.networksecurity.entity.artifact_entity import ModelTrainerArtifact, DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ClassificationMetricArtifact
 from src.networksecurity.exception import NSException
 from src.networksecurity.loggings import logger
+from src.networksecurity.constants import training_pipeline
+from src.networksecurity.cloud import S3Sync
 
 from dataclasses import dataclass
 import sys
@@ -19,7 +21,8 @@ class TrainingPipeline:
 
     def __post_init__(self):
         self.training_pipeline_config=TrainingPipelineConfig()
-
+        self.training_bucket_name = training_pipeline.TRAINING_BUCKET_NAME
+        self.s3_sync = S3Sync()
     def start_data_ingestion(self):
         try:
             self.data_ingestion_config = DataIngestionConfig(self.training_pipeline_config)
@@ -64,6 +67,25 @@ class TrainingPipeline:
         except Exception as e:
             logger.info(NSException(e,sys))
             raise NSException(e,sys)
+    
+    def sync_artifact_dir_to_s3(self):
+        try:
+            aws_bucket_url = f"s3://{self.training_bucket_name}/final_model/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_to_s3(folder=self.training_pipeline_config.artifact_dir,aws_bucket_url=aws_bucket_url)
+            logger.info("<<<<< Artifact folder sync'd to AWS s3 bucket >>>>>")
+        except Exception as e:
+            logger.info(NSException(e,sys))
+            raise NSException(e,sys)
+    
+    def sync_saved_model_dir_to_s3(self):
+        try:
+            aws_bucket_url = f"s3://{self.training_bucket_name}/final_model/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_to_s3(folder=self.training_pipeline_config.model_dir,aws_bucket_url=aws_bucket_url)
+            logger.info("<<<<< Model folder sync'd to AWS s3 bucket >>>>>")
+        except Exception as e:
+            logger.info(NSException(e,sys))
+            raise NSException(e,sys)
+            
         
     def run_pipeline(self):
         try:
@@ -72,7 +94,8 @@ class TrainingPipeline:
             data_transformation_artifact = self.start_data_transformation(data_validation_artifact)
             model_trainer_artifact = self.start_model_trainer(data_transformation_artifact)
             logger.info('\n<<<<<Training Pipeline successfully completed>>>>>\n')
-
+            self.sync_artifact_dir_to_s3()
+            self.sync_saved_model_dir_to_s3()
         except Exception as e:
             logger.info(NSException(e,sys))
             raise NSException(e,sys)

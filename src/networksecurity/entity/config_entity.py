@@ -12,8 +12,8 @@ class TrainingPipelineConfig:
     def __post_init__(self):
         self.pipeline_name: str = training_pipeline.PIPELINE_NAME
         self.artifact_name:  str = training_pipeline.ARTIFACT_DIR
-        timestamp: str = datetime.now().strftime("%m_%d_%Y")
-        self.artifact_dir = os.path.join(self.artifact_name,timestamp)
+        self.timestamp: str = datetime.now().strftime("%m_%d_%Y")
+        self.artifact_dir = os.path.join(self.artifact_name,self.timestamp)
         self.model_dir = os.path.join("final_model")
         
 @dataclass
