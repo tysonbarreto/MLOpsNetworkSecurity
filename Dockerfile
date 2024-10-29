@@ -22,6 +22,6 @@ COPY app.py /project/
 COPY pipeline /project/pipeline
 COPY schema /project/schema
 COPY templates /project/templates
-COPY .env /project/
+#COPY .env /project/.env
 WORKDIR /project
 CMD ["python", "/project/app.py"]
