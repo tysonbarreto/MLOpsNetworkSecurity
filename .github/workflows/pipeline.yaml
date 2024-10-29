@@ -34,7 +34,7 @@ jobs:
                 sudo apt-get update
                 sudo apt-get install -y jq unzip
             - name: Configure AWS creadentials
-              uses: aws-actions/configure-aws-credentials@v1
+              uses: aws-actions/configure-aws-credentials@v4
               with:
                 aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -42,5 +42,7 @@ jobs:
             
             - name: Login into AWS ECR
               id: login-ecr
-              run: aws-actions/amazon-ecr-login@v1
+              run: aws-actions/amazon-ecr-login@v2
+              with:
+                mask-password: 'false'
               
